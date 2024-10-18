@@ -308,3 +308,25 @@ void MainWindow::on_btnEqual_clicked()
                                        .arg(operands.size()).arg(opcodes.size()));
     }
 }
+
+// 在指定的延迟后模拟按钮点击
+void animateButtonClick(QAbstractButton *button, int delay)
+{
+    QTimer::singleShot(delay, button, &QPushButton::animateClick);
+}
+
+// 处理键盘按键事件
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    foreach(auto btnKey,digitBtns.keys()){
+        if(event->key() == btnKey){
+            // digitBtns[btnKey]->animateClick(100);
+            // Too many arguments to function call, expected 0, have 1
+
+            // 定义辅助函数模拟按钮点击
+            animateButtonClick(digitBtns[btnKey], 100);
+
+            digitBtns[btnKey]->animateClick();
+        }
+    }
+}
