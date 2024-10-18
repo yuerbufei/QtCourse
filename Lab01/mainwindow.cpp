@@ -236,6 +236,45 @@ void MainWindow::btnTwoOperatorClicked()
 }
 
 
+// 单操作数运算符处理
+void MainWindow::btnOneOperatorClicked()
+{
+    if (operand != "") {
+        double result = operand.toDouble();
+        operand.clear();  // 清空 operand
+
+        QString opcode = qobject_cast<QPushButton *>(sender())->text();
+
+        if (opcode == "%") {
+            result /= 100.0;
+        } else if (opcode == "1/x") {
+            if (result != 0) {
+                result = 1.0 / result;
+            } else {
+                ui->statusbar->showMessage("除数不能为零");
+                return;
+            }
+        } else if (opcode == "x^2") {
+            result *= result;
+        } else if (opcode == "2√x") {
+            if (result >= 0) {
+                result = sqrt(result);
+            } else {
+                ui->statusbar->showMessage("无法对负数开平方根");
+                return;
+            }
+        }
+
+        // 更新 operand 并在 UI 上显示结果
+        operand = QString::number(result);
+        ui->display->setText(operand);
+
+        // 清空 operands 和 opcodes，准备下一次计算
+        operands.clear();
+        opcodes.clear();
+    }
+}
+
 // 等号按钮点击处理
 void MainWindow::on_btnEqual_clicked()
 {
