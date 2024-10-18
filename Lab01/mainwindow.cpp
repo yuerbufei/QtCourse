@@ -135,3 +135,137 @@ void MainWindow::on_btnClearAll_clicked()
 
     ui->display->setText(operand);
 }
+
+// 进行运算操作
+QString MainWindow::calculation(bool *ok)
+{
+    *ok = true;
+    if (operands.size() != 2 || opcodes.size() != 1) {
+        *ok = false;
+        return "Error";
+    }
+
+    // 打印输入值
+    qDebug() << "Operand 1:" << operands.front();
+    qDebug() << "Operand 2:" << operands.back();
+    qDebug() << "Opcode:" << opcodes.front();
+
+    double operand1 = operands.front().toDouble();
+    double operand2 = operands.back().toDouble();
+    QString opcode = opcodes.front();
+
+    // 检查转换后的值
+    qDebug() << "Converted Operand 1:" << operand1;
+    qDebug() << "Converted Operand 2:" << operand2;
+
+    double result = 0.0;
+
+    if (opcode == "+") {
+        result = operand1 + operand2;
+    } else if (opcode == "-") {
+        result = operand1 - operand2;
+    } else if (opcode == "×") {
+        result = operand1 * operand2;
+    } else if (opcode == "÷") {
+        if (operand2 != 0) {
+            result = operand1 / operand2;
+        } else {
+            *ok = false;
+            return "Error: Division by zero";
+        }
+
+
+        ui->statusbar->showMessage(QString("calculations is in process: operands size %1, opcodes size %2")
+                                       .arg(operands.size()).arg(opcodes.size()));
+    } else {
+        *ok = false;
+
+        ui->statusbar->showMessage(QString("operands size %1, opcodes size %2")
+                                       .arg(operands.size()).arg(opcodes.size()));
+        return "Error: Unknown operator";
+    }
+
+    // 打印结果
+    qDebug() << "Result:" << result;
+
+    return QString::number(result);
+}
+
+// 双操作数运算符处理
+void MainWindow::btnTwoOperatorClicked()
+{
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
+    if (button) {
+        if (!operand.isEmpty()) {
+            operands.push_back(operand);
+            operand.clear();  // 清空 operand 以准备接收下一个操作数
+
+            QString opcode = button->text();
+            opcodes.push_back(opcode);
+
+            // 更新 currentExpression
+            if (operands.size() >= 1 && opcodes.size() >= 1) {
+                currentExpression = operands.front() + opcodes.front();
+                if (operands.size() == 2) {
+                    currentExpression += operands.back();
+                }
+                ui->statusbar->showMessage(currentExpression);
+            }
+
+            // 如果已经有两个操作数和一个操作符，立即进行计算
+            if (operands.size() == 2 && opcodes.size() == 1) {
+                bool ok = true;
+                QString result = calculation(&ok);
+                if (ok) {
+                    ui->display->setText(result);
+                    // 清空 operands 和 opcodes，准备下一次计算
+                    operands.clear();
+                    opcodes.clear();
+                    // 将当前结果设置为新的 operand
+                    operand = result;
+
+                    // 更新 currentExpression 显示最终结果
+                    currentExpression = result;
+                    ui->statusbar->showMessage(currentExpression);
+                } else {
+                    ui->statusbar->showMessage("计算出错");
+                }
+            }
+        }
+    }
+}
+
+
+// 等号按钮点击处理
+void MainWindow::on_btnEqual_clicked()
+{
+    // 如果 operand 不为空，则将其添加到 operands 列表中
+    if (!operand.isEmpty()) {
+        operands.push_back(operand);
+        operand.clear();  // 清空 operand 以准备接收下一个操作数
+    }
+
+    // 如果已经有两个操作数和一个操作符，立即进行计算
+    if (operands.size() == 2 && opcodes.size() == 1) {
+        bool ok = true;
+        QString result = calculation(&ok);
+        if (ok) {
+            ui->display->setText(result);
+            // 清空 operands 和 opcodes，准备下一次计算
+            operands.clear();
+            opcodes.clear();
+            // 将当前结果设置为新的 operand
+            operand = result;
+
+            // 更新 currentExpression 显示最终结果
+            currentExpression = result;
+            ui->statusbar->showMessage(currentExpression);
+        } else {
+            ui->statusbar->showMessage("计算出错");
+        }
+    } else {
+        // 如果 operands 或 opcodes 数量不正确，显示错误信息
+        ui->statusbar->showMessage(QString("操作数或操作符数量不正确: operands size %1, opcodes size %2")
+                                       .arg(operands.size()).arg(opcodes.size()));
+    }
+}
