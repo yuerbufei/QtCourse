@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/about.png</file>
+        <file>images/copy.png</file>
+        <file>images/cut.png</file>
+        <file>images/display-lineNumber.png</file>
+        <file>images/editorBackScenery.png</file>
+        <file>images/exit.png</file>
+        <file>images/find.png</file>
+        <file>images/font.png</file>
+        <file>images/fontBackScenery.png</file>
+        <file>images/fontColor.png</file>
+        <file>images/go-top.png</file>
+        <file>images/icons.qrc</file>
+        <file>images/logo.png</file>
+        <file>images/newDirectory.png</file>
+        <file>images/newFile.png</file>
+        <file>images/open.png</file>
+        <file>images/paste.png</file>
+        <file>images/print.png</file>
+        <file>images/redo.png</file>
+        <file>images/replace.png</file>
+        <file>images/save.png</file>
+        <file>images/saveas.png</file>
+        <file>images/selectAll.png</file>
+        <file>images/status.png</file>
+        <file>images/tool.png</file>
+        <file>images/undo.png</file>
+        <file>images/wrap.png</file>
+    </qresource>
+</RCC>
