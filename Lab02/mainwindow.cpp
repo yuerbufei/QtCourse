@@ -1,13 +1,40 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "aboutdialog.h"
+#include "searchdialog.h"
+#include "replacedialog.h"
+
 #include <QHBoxLayout>
 #include <QWidget>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QFontDialog>
+#include <QTextEdit>
 
-// 定义一个辅助函数来设置 QLabel 的属性
+#include <QColorDialog>
+#include <QPixmap>
+#include <QPalette>
+#include <QGraphicsOpacityEffect>  // 透明度
+#include <QSlider>  // 滑块
+
+#include <QFileDialog>
+#include <QTextStream>
+
+#include <QDebug>
+
+
+// 初始化常量颜色
+const QColor MainWindow::DefaultBackgroundColor(Qt::white);
+const QColor MainWindow::LightYellow(255, 250, 205); // 米黄色
+const QColor MainWindow::LightGreen(208, 232, 211);  // 淡绿色
+const QColor MainWindow::LightBlue(204, 229, 255);   // 淡蓝色
+
+
+// 辅助函数：设置 QLabel 的属性
 void setStatusLabel(QLabel &label, const QString &initialText) {
     label.setText(initialText);
-    label.adjustSize(); // 自动调整 QLabel 的大小以适应内容
-    label.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed); // 设置水平方向为 Preferred，垂直方向为 Fixed
+    label.adjustSize();  // 自动调整 QLabel 的大小以适应内容
+    label.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // 设置水平方向为 Preferred，垂直方向为 Fixed
 }
 
 // 创建分隔符标签
@@ -20,40 +47,15 @@ QLabel *createSeparator() {
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , textChanged(false)
+    , toolBar(new QToolBar(this))
+    , statusBarVisible(true) // 初始化工具栏
+// , opacityEffect(new QGraphicsOpacityEffect(this))
 {
     ui->setupUi(this);
 
-    // 创建一个水平布局来管理状态栏中的标签
-    QHBoxLayout *statusBarLayout = new QHBoxLayout();
-    statusBarLayout->setContentsMargins(0, 0, 0, 0); // 移除默认的边距
-
-    // 初始化 documentInfoLabel
-    QLabel *docLabel = new QLabel();
-    setStatusLabel(*docLabel, "docLength: 0     lines: 1");
-
-    // 初始化 cursorInfoLabel
-    QLabel *cursorLabel = new QLabel();
-    setStatusLabel(*cursorLabel, "charsBeforeCursor: 0      col: 1");
-
-    // 创建并配置作者名称标签
-    QLabel *author = new QLabel(tr("李志罡"));
-    author->adjustSize(); // 自动调整作者标签的大小
-    author->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-
-    // 将标签和分隔符添加到布局中
-    statusBarLayout->addWidget(docLabel);
-    statusBarLayout->addWidget(createSeparator());
-    statusBarLayout->addWidget(cursorLabel);
-    statusBarLayout->addWidget(createSeparator());
-    statusBarLayout->addStretch(); // 添加伸缩空间，使作者标签靠右对齐L
-    statusBarLayout->addWidget(author);
-
-    // 创建一个 QWidget 来容纳布局
-    QWidget *statusBarWidget = new QWidget(this);
-    statusBarWidget->setLayout(statusBarLayout);
-
-    // 将 QWidget 添加到状态栏
-    ui->statusbar->addPermanentWidget(statusBarWidget);
+    // 初始化并触发新建文件操作
+    on_actionNew_triggered();
 }
 
 MainWindow::~MainWindow()
