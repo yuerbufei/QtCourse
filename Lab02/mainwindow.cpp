@@ -67,6 +67,51 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+// 撤销操作
+void MainWindow::on_actionUndo_triggered()
+{
+    if (ui->textEdit->document()->isUndoAvailable()) {
+        ui->textEdit->undo();
+    }
+}
+// 恢复操作
+void MainWindow::on_actionRedo_triggered()
+{
+    if (ui->textEdit->document()->isRedoAvailable()) {
+        ui->textEdit->redo();
+    }
+}
+// 复制
+void MainWindow::on_actionCopy_triggered()
+{
+    if (ui->textEdit->textCursor().hasSelection()) {
+        ui->textEdit->copy();
+    } else {
+        // 如果没有选中文本，则可以显示一个提示信息
+        QMessageBox::information(this, tr("复制"), tr("请先选择要复制的文本。"));
+    }
+}
+// 剪切
+void MainWindow::on_actionCut_triggered()
+{
+    if (ui->textEdit->textCursor().hasSelection()) {
+        ui->textEdit->cut();
+    } else {
+        // 如果没有选中文本，则可以显示一个提示信息
+        QMessageBox::information(this, tr("剪切"), tr("请先选择要剪切的文本。"));
+    }
+}
+// 粘贴
+void MainWindow::on_actionPaste_triggered()
+{
+    ui->textEdit->paste();
+}
+
+// 全选
+void MainWindow::on_actionSelectAll_triggered()
+{
+    ui->textEdit->selectAll();
+}
 
 // 查找对话框
 void MainWindow::on_actionFind_triggered()
