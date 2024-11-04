@@ -66,3 +66,10 @@ MainWindow::~MainWindow()
     }
     delete ui;
 }
+
+// 关于
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog dialog;
+    dialog.exec();
+}
