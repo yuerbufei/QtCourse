@@ -399,6 +399,123 @@ void MainWindow::setBackgroundImage(const QString &path, double opacity)
     }
 }
 
+// 工具栏
+void MainWindow::on_actionToolBar_triggered()
+{
+    // 假设 toolBar 是一个 QToolBar 类型的成员变量
+    toolBar->setVisible(!toolBar->isVisible());
+}
+
+// 状态栏
+void MainWindow::on_actionStatus_triggered()
+{
+    if (statusBarWidget.parent() == nullptr) {
+        // 创建状态栏布局
+        QHBoxLayout *statusBarLayout = new QHBoxLayout(&statusBarWidget);
+        statusBarLayout->setContentsMargins(0, 0, 0, 0);
+
+        // 初始化文档信息标签
+        setStatusLabel(docLabel, "docLength: 0     lines: 1");
+        docLabel.setObjectName("docLabel");
+
+        // 初始化光标信息标签
+        setStatusLabel(cursorLabel, "charsBeforeCursor: 0      col: 1");
+        cursorLabel.setObjectName("cursorLabel");
+
+        // 创建并配置作者名称标签
+        QLabel author(tr("李志罡"), &statusBarWidget);
+        author.adjustSize();
+        author.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+
+        // 将标签和分隔符添加到布局中
+        statusBarLayout->addWidget(&docLabel);
+        statusBarLayout->addWidget(createSeparator());
+        statusBarLayout->addWidget(&cursorLabel);
+        statusBarLayout->addWidget(createSeparator());
+        statusBarLayout->addStretch();
+        statusBarLayout->addWidget(&author);
+
+        // 将 QWidget 添加到状态栏
+        ui->statusbar->addPermanentWidget(&statusBarWidget);
+    }
+
+    // 切换状态栏的可见性
+    on_actionStatus_visibleChanged();
+}
+
+// 切换状态栏的可见性
+void MainWindow::on_actionStatus_visibleChanged()
+{
+    statusBarWidget.setVisible(!statusBarWidget.isVisible());
+    statusBarVisible = !statusBarVisible;
+}
+
+// 处理鼠标按下事件
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    // 检查点击是否发生在状态栏上
+    if (ui->statusbar->geometry().contains(event->pos())) {
+        on_actionStatus_visibleChanged();
+    } else {
+        QMainWindow::mousePressEvent(event); // 如果不是在状态栏上，则传递给基类处理
+    }
+}
+
+// 设置标签文本的辅助函数
+void MainWindow::setStatusLabel(QLabel &label, const QString &text)
+{
+    label.setText(text);
+}
+
+// 创建分隔符的辅助函数
+QWidget* MainWindow::createSeparator()
+{
+    QWidget *separator = new QWidget(&statusBarWidget);
+    separator->setFixedWidth(2);  // 设置分隔符宽度
+    return separator;
+}
+
+// 文本变化时更新信息
+void MainWindow::on_textEdit_textChanged()
+{
+    updateStatusBar();  // 更新状态栏信息
+
+    if (!textChanged) {
+        setWindowTitle("*" + windowTitle());  // 在窗口标题前加星号表示有未保存的更改
+        textChanged = true;
+    }
+}
+
+// 根据更改后文本，更新状态栏信息
+void MainWindow::updateStatusBar()
+{
+    // 获取当前文本
+    QString text = ui->textEdit->toPlainText();
+
+    // 计算文档长度（字符数）
+    int docLength = text.length();
+    // 计算行数
+    int lines = text.count('\n') + 1;  // 每个换行符'\n'表示一行，加上最后一行
+
+    // 获取光标位置
+    QTextCursor cursor = ui->textEdit->textCursor();
+    // 计算光标前的字符数
+    int charsBeforeCursor = cursor.position();
+    // 计算光标所在列
+    int col = cursor.columnNumber() + 1;  // columnNumber 是从0开始的，所以我们加1
+
+    // 更新状态栏中的 QLabel
+    QLabel *docLabel = findChild<QLabel*>("docLabel");
+    if (docLabel) {
+        docLabel->setText(tr("字数: %1     行数: %2").arg(docLength).arg(lines));
+    }
+
+    QLabel *cursorLabel = findChild<QLabel*>("cursorLabel");
+    if (cursorLabel) {
+        cursorLabel->setText(tr("光标位置: %1     列: %2").arg(charsBeforeCursor).arg(col));
+    }
+}
+
 // 关于对话框
 void MainWindow::on_actionAbout_triggered()
 {
