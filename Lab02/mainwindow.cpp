@@ -245,6 +245,160 @@ void MainWindow::on_actionReplace_triggered()
     dialog.exec();
 }
 
+// 自动换行
+void MainWindow::on_actionWrap_triggered()
+{
+    if (ui->textEdit->lineWrapMode() == QTextEdit::WidgetWidth) {
+        // 如果当前是自动换行模式，则关闭它
+        ui->textEdit->setLineWrapMode(QTextEdit::NoWrap);
+    } else {
+        // 否则启用自动换行
+        ui->textEdit->setLineWrapMode(QTextEdit::WidgetWidth);
+    }
+}
+// 字体
+void MainWindow::on_actionFont_triggered()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, ui->textEdit->font(), this);
+
+    if (ok) {
+        // 应用选定的字体
+        ui->textEdit->setFont(font);
+    }
+}
+// 字体颜色
+void MainWindow::on_actionFontColor_triggered()
+{
+    QColor color = QColorDialog::getColor(ui->textEdit->textColor(), this, tr("选择字体颜色"));
+
+    if (color.isValid()) {
+        // 应用选定的颜色
+        ui->textEdit->setTextColor(color);
+    }
+}
+// 字体背景色
+void MainWindow::on_actionFontBackScenery_triggered()
+{
+    QColor color = QColorDialog::getColor(ui->textEdit->textBackgroundColor(), this, tr("选择字体背景颜色"));
+
+    if (color.isValid()) {
+        // 应用选定的背景颜色
+        QTextCharFormat fmt;
+        fmt.setBackground(color);
+        ui->textEdit->mergeCurrentCharFormat(fmt);
+    }
+}
+
+// 编辑器背景色
+void MainWindow::on_actionEditorBackScenery_triggered()
+{
+    QDialog dialog(this);
+    dialog.setWindowTitle(tr("编辑器背景色"));  // 设置对话框标题
+
+    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+
+    // 预设颜色按钮
+    QPushButton *defaultButton = new QPushButton(tr("默认白色"), &dialog);
+    QPushButton *yellowButton = new QPushButton(tr("米黄色"), &dialog);
+    QPushButton *greenButton = new QPushButton(tr("淡绿色"), &dialog);
+    QPushButton *blueButton = new QPushButton(tr("淡蓝色"), &dialog);
+
+    // 连接信号与槽
+    connect(defaultButton, &QPushButton::clicked, [this, &dialog] {
+        applyBackgroundColor(Qt::white, 1.0);  // 默认不透明
+        dialog.accept();
+    });
+    connect(yellowButton, &QPushButton::clicked, [this, &dialog] {
+        applyBackgroundColor(QColor(255, 255, 224), 1.0);  // 米黄色
+        dialog.accept();
+    });
+    connect(greenButton, &QPushButton::clicked, [this, &dialog] {
+        applyBackgroundColor(QColor(204, 255, 204), 1.0);  // 淡绿色
+        dialog.accept();
+    });
+    connect(blueButton, &QPushButton::clicked, [this, &dialog] {
+        applyBackgroundColor(QColor(204, 229, 255), 1.0);  // 淡蓝色
+        dialog.accept();
+    });
+
+    // 自定义颜色按钮
+    QPushButton *customColorButton = new QPushButton(tr("自定义颜色..."), &dialog);
+    connect(customColorButton, &QPushButton::clicked, [this, &dialog] {
+        QColor color = QColorDialog::getColor(this->palette().color(QPalette::Window), this, tr("选择背景颜色"));
+        if (color.isValid()) {
+            applyBackgroundColor(color, 1.0);
+            dialog.accept();
+        }
+    });
+
+    // 上传图片按钮
+    QPushButton *imageButton = new QPushButton(tr("上传图片..."), &dialog);
+    connect(imageButton, &QPushButton::clicked, [this, &dialog] {
+        QString imagePath = QFileDialog::getOpenFileName(this, tr("选择背景图片"), "", tr("Images (*.png *.xpm *.jpg *.bmp *.gif)"));
+        if (!imagePath.isEmpty()) {
+            setBackgroundImage(imagePath, 1.0);
+            dialog.accept();
+        }
+    });
+
+    // 添加控件到布局
+    layout->addWidget(defaultButton);
+    layout->addWidget(yellowButton);
+    layout->addWidget(greenButton);
+    layout->addWidget(blueButton);
+    layout->addWidget(customColorButton);
+    layout->addWidget(imageButton);
+
+    // 显示对话框
+    dialog.exec();
+}
+
+// 打开图片文件对话框
+void MainWindow::openImageFileDialog()
+{
+    QString imagePath = QFileDialog::getOpenFileName(this, tr("选择背景图片"), "", tr("Images (*.png *.xpm *.jpg *.bmp *.gif)"));
+    if (!imagePath.isEmpty()) {
+        setBackgroundImage(imagePath, 1.0);  // 应用默认不透明度
+    }
+}
+
+// 应用背景颜色
+void MainWindow::applyBackgroundColor(const QColor &color, double opacity)
+{
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Window, color);
+    this->setPalette(palette);
+
+    QPalette textEditPalette = ui->textEdit->palette();
+    textEditPalette.setColor(QPalette::Base, color);
+    ui->textEdit->setPalette(textEditPalette);
+
+    // 强制重绘
+    this->update();
+}
+
+// 应用背景图片
+void MainWindow::setBackgroundImage(const QString &path, double opacity)
+{
+    QPixmap pixmap(path);
+    if (!pixmap.isNull()) {
+        pixmap = pixmap.scaled(this->size(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        pixmap.scaled(this->size());
+
+        QPalette palette = this->palette();
+        palette.setBrush(QPalette::Window, QBrush(pixmap));
+        this->setPalette(palette);
+
+        QPalette textEditPalette = ui->textEdit->palette();
+        textEditPalette.setBrush(QPalette::Base, QBrush(pixmap));
+        ui->textEdit->setPalette(textEditPalette);
+
+        // 强制重绘
+        this->update();
+    }
+}
+
 // 关于对话框
 void MainWindow::on_actionAbout_triggered()
 {
