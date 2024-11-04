@@ -67,7 +67,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// 关于
+
+// 查找对话框
+void MainWindow::on_actionFind_triggered()
+{
+    SearchDialog dialog(this,ui->textEdit);
+    dialog.exec();
+}
+// 替换对话框
+void MainWindow::on_actionReplace_triggered()
+{
+    ReplaceDialog dialog(this,ui->textEdit);
+    dialog.exec();
+}
+
+// 关于对话框
 void MainWindow::on_actionAbout_triggered()
 {
     AboutDialog dialog;
