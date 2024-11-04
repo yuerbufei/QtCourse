@@ -522,3 +522,31 @@ void MainWindow::on_actionAbout_triggered()
     AboutDialog dialog;
     dialog.exec();
 }
+
+// 缩放文本
+void MainWindow::wheelEvent(QWheelEvent *event)
+{
+    // 检查 Ctrl 键是否被按下
+    if (event->modifiers() & Qt::ControlModifier) {
+        int delta = event->angleDelta().y();
+        QFont currentFont = ui->textEdit->font();
+
+        if (delta > 0) {
+            // 放大字体
+            int newSize = currentFont.pointSize() + 1;
+            currentFont.setPointSize(newSize);
+        } else if (delta < 0) {
+            // 缩小字体
+            int newSize = currentFont.pointSize() - 1;
+            if (newSize > 0) { // 确保字体大小不小于 1
+                currentFont.setPointSize(newSize);
+            }
+        }
+
+        ui->textEdit->setFont(currentFont);
+    } else {
+        // 如果没有按下 Ctrl 键，调用基类的 wheelEvent 处理
+        QMainWindow::wheelEvent(event);
+    }
+}
+
