@@ -523,7 +523,8 @@ void MainWindow::on_actionAbout_triggered()
     dialog.exec();
 }
 
-// 缩放文本
+// 缩放文本about
+
 void MainWindow::wheelEvent(QWheelEvent *event)
 {
     // 检查 Ctrl 键是否被按下
