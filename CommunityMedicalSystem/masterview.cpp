@@ -37,10 +37,10 @@ void MasterView::goWelcomeView()
     pushWidgetToStackView(welcomeView);
 
     // 当 welcomeView 对象发出 goDoctorView 信号时，MasterView 对象中的 goDoctorView 槽函数将被调用
-    connect(welcomeView,SIGNAL(goDoctorView()),this,SLOT(goDoctorView()));
-    connect(welcomeView,SIGNAL(goPatientView()),this,SLOT(goPatientView()));
-    connect(welcomeView,SIGNAL(goMedicalView()),this,SLOT(goMedicalView()));
-    connect(welcomeView,SIGNAL(goRecordView()),this,SLOT(goRecordView()));
+    // connect(welcomeView,SIGNAL(goDoctorView()),this,SLOT(goDoctorView()));
+    // connect(welcomeView,SIGNAL(goPatientView()),this,SLOT(goPatientView()));
+    // connect(welcomeView,SIGNAL(goMedicalView()),this,SLOT(goMedicalView()));
+    // connect(welcomeView,SIGNAL(goRecordView()),this,SLOT(goRecordView()));
     // connect(welcomeView,SIGNAL(goDepartmentView()),this,SLOT(goDepartmentView()));
 }
 
