@@ -32,7 +32,7 @@ PatientView::~PatientView()
 
 void PatientView::on_btnFind_clicked()
 {
-    QString filter = QString("name like '%%1%").arg(ui->textSearch->text());
+    QString filter = QString("name like '%%1%'").arg(ui->textSearch->text());
     DatabaseConnection::getInstance().searchPatients(filter);
 }
 

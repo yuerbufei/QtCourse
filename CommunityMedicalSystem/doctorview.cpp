@@ -40,7 +40,7 @@ void DoctorView::on_btnDelete_clicked()
 
 void DoctorView::on_btnFind_clicked()
 {
-    QString filter = QString("name like '%%1%").arg(ui->textSearch->text());
+    QString filter = QString("name like '%%1%'").arg(ui->textSearch->text());
     DatabaseConnection::getInstance().searchDoctors(filter);
 }
 

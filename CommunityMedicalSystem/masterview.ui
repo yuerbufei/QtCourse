@@ -63,7 +63,7 @@
      <item>
       <widget class="QPushButton" name="btnLogOut">
        <property name="text">
-        <string/>
+        <string>退出</string>
        </property>
        <property name="icon">
         <iconset>
