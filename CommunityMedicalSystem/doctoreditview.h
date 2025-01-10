@@ -2,6 +2,7 @@
 #define DOCTOREDITVIEW_H
 
 #include <QWidget>
+#include <QDataWidgetMapper>
 
 namespace Ui {
 class DoctorEditView;
@@ -20,11 +21,11 @@ signals:
 
 private slots:
     void on_btnCancelDoctorEdit_clicked();
-
     void on_btnSaveDoctorEdit_clicked();
 
 private:
     Ui::DoctorEditView *ui;
+    QDataWidgetMapper *dataMapper; // 数据映射
 };
 
 #endif // DOCTOREDITVIEW_H

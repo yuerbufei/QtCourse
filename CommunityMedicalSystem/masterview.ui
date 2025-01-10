@@ -19,7 +19,7 @@
      <item>
       <widget class="QPushButton" name="btnBack">
        <property name="text">
-        <string/>
+        <string>返回</string>
        </property>
        <property name="icon">
         <iconset>

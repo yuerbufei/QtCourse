@@ -16,7 +16,13 @@ public:
     ~DoctorView();
 
 signals:
-    void goDoctorEditView();
+    void goDoctorEditView(int index);
+
+private slots:
+    void on_btnDelete_clicked();
+    void on_btnFind_clicked();
+    void on_btnIncrease_clicked();
+    void on_btnModify_clicked();
 
 private:
     Ui::DoctorView *ui;

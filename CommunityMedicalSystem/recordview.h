@@ -22,7 +22,7 @@ private slots:
     void on_btnModify_clicked();
 
 signals:
-    void goRecordEditView();
+    void goRecordEditView(int index);
 
 private:
     Ui::RecordView *ui;

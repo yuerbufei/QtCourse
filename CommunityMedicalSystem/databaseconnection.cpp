@@ -1,6 +1,7 @@
 #include "databaseconnection.h"
 #include <QSqlError>
 #include <QDebug>
+#include <QUuid>
 
 DatabaseConnection::DatabaseConnection(QObject *parent)
     : QObject(parent), database(QSqlDatabase::addDatabase("QSQLITE"))
@@ -101,22 +102,26 @@ int DatabaseConnection::addNewDoctor()
 
 bool DatabaseConnection::searchDoctors(QString filter)
 {
-
+    doctorsTableModel->setFilter(filter);
+    return doctorsTableModel->select();
 }
 
 bool DatabaseConnection::deleteCurrentDoctors()
 {
-
+    QModelIndex curIndex = doctorsSelectionModel->currentIndex();
+    doctorsTableModel->removeRow(curIndex.row()); // 获取当前选择单元格的模型索引
+    doctorsTableModel->submitAll();
+    doctorsTableModel->select();
 }
 
 bool DatabaseConnection::submitDoctorsEdit()
 {
-
+    return doctorsTableModel->submitAll();
 }
 
 bool DatabaseConnection::revertDoctorsEdit()
 {
-
+    doctorsTableModel->revertAll();
 }
 
 bool DatabaseConnection::initPatientsModel()
@@ -214,22 +219,26 @@ int DatabaseConnection::addNewMedication()
 
 bool DatabaseConnection::searchMedications(QString filter)
 {
-
+    medicationsTableModel->setFilter(filter);
+    return medicationsTableModel->select();
 }
 
 bool DatabaseConnection::deleteCurrentMedications()
 {
-
+    QModelIndex curIndex = medicationsSelectionModel->currentIndex();
+    medicationsTableModel->removeRow(curIndex.row()); // 获取当前选择单元格的模型索引
+    medicationsTableModel->submitAll();
+    medicationsTableModel->select();
 }
 
 bool DatabaseConnection::submitMedicationsEdit()
 {
-
+    return medicationsTableModel->submitAll();
 }
 
 bool DatabaseConnection::revertMedicationsEdit()
 {
-
+    medicationsTableModel->revertAll();
 }
 
 bool DatabaseConnection::initVisitsModel()
@@ -268,20 +277,24 @@ int DatabaseConnection::addNewVisit()
 
 bool DatabaseConnection::searchVisits(QString filter)
 {
-
+    visitsTableModel->setFilter(filter);
+    return visitsTableModel->select();
 }
 
 bool DatabaseConnection::deleteCurrentVisits()
 {
-
+    QModelIndex curIndex = visitsSelectionModel->currentIndex();
+    visitsTableModel->removeRow(curIndex.row()); // 获取当前选择单元格的模型索引
+    visitsTableModel->submitAll();
+    visitsTableModel->select();
 }
 
 bool DatabaseConnection::submitVisitsEdit()
 {
-
+    return visitsTableModel->submitAll();
 }
 
 bool DatabaseConnection::revertVisitsEdit()
 {
-
+    visitsTableModel->revertAll();
 }

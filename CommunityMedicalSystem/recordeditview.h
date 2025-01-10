@@ -2,6 +2,7 @@
 #define RECORDEDITVIEW_H
 
 #include <QWidget>
+#include <QDataWidgetMapper>
 
 namespace Ui {
 class RecordEditView;
@@ -21,11 +22,11 @@ signals:
 
 private slots:
     void on_btnCancelRecordEdit_clicked();
-
-    void on_btnSaverecordEdit_clicked();
+    void on_btnSaveRecordEdit_clicked();
 
 private:
     Ui::RecordEditView *ui;
+    QDataWidgetMapper *dataMapper; // 数据映射
 };
 
 #endif // RECORDEDITVIEW_H

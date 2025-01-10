@@ -17,31 +17,35 @@
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="textSearch"/>
+      <widget class="QLineEdit" name="textSearch">
+       <property name="placeholderText">
+        <string>请输入姓名进行查找</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnFind_2">
+      <widget class="QPushButton" name="btnFind">
        <property name="text">
         <string>查找</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnIncrease_2">
+      <widget class="QPushButton" name="btnIncrease">
        <property name="text">
         <string>添加</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnDelete_2">
+      <widget class="QPushButton" name="btnDelete">
        <property name="text">
         <string>删除</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnModify_2">
+      <widget class="QPushButton" name="btnModify">
        <property name="text">
         <string>修改</string>
        </property>

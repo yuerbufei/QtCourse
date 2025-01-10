@@ -22,7 +22,7 @@ private slots:
     void on_btnModify_clicked();
 
 signals:
-    void goMedicalEditView();
+    void goMedicalEditView(int index);
 
 private:
     Ui::MedicalView *ui;
