@@ -15,6 +15,14 @@ public:
     explicit DoctorEditView(QWidget *parent = nullptr,int index = 0);
     ~DoctorEditView();
 
+signals:
+    void goPreviousView();
+
+private slots:
+    void on_btnCancelDoctorEdit_clicked();
+
+    void on_btnSaveDoctorEdit_clicked();
+
 private:
     Ui::DoctorEditView *ui;
 };

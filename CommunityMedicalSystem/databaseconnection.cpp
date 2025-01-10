@@ -92,10 +92,10 @@ bool DatabaseConnection::initDoctorsModel()
     return true;
 }
 
-int DatabaseConnection::addNewPatient()
+int DatabaseConnection::addNewDoctor()
 {
-    patientsTableModel->insertRow(patientsTableModel->rowCount(),QModelIndex());    // 在末尾添加一条记录
-    QModelIndex curIndex = patientsTableModel->index(patientsTableModel->rowCount()-1,1);   // 创建最后一行的ModelIndex
+    doctorsTableModel->insertRow(doctorsTableModel->rowCount(),QModelIndex());    // 在末尾添加一条记录
+    QModelIndex curIndex = doctorsTableModel->index(doctorsTableModel->rowCount()-1,1);   // 创建最后一行的ModelIndex
     return curIndex.row();
 }
 
@@ -146,6 +146,13 @@ bool DatabaseConnection::initPatientsModel()
     return true;
 }
 
+int DatabaseConnection::addNewPatient()
+{
+    patientsTableModel->insertRow(patientsTableModel->rowCount(),QModelIndex());    // 在末尾添加一条记录
+    QModelIndex curIndex = patientsTableModel->index(patientsTableModel->rowCount()-1,1);   // 创建最后一行的ModelIndex
+    return curIndex.row();
+}
+
 bool DatabaseConnection::searchPatients(QString filter)
 {
     patientsTableModel->setFilter(filter);
@@ -169,6 +176,7 @@ bool DatabaseConnection::revertPatientsEdit()
 {
     patientsTableModel->revertAll();
 }
+
 
 bool DatabaseConnection::initMedicationsModel()
 {
@@ -197,6 +205,33 @@ bool DatabaseConnection::initMedicationsModel()
     return true;
 }
 
+int DatabaseConnection::addNewMedication()
+{
+    medicationsTableModel->insertRow(medicationsTableModel->rowCount(),QModelIndex());    // 在末尾添加一条记录
+    QModelIndex curIndex = medicationsTableModel->index(medicationsTableModel->rowCount()-1,1);   // 创建最后一行的ModelIndex
+    return curIndex.row();
+}
+
+bool DatabaseConnection::searchMedications(QString filter)
+{
+
+}
+
+bool DatabaseConnection::deleteCurrentMedications()
+{
+
+}
+
+bool DatabaseConnection::submitMedicationsEdit()
+{
+
+}
+
+bool DatabaseConnection::revertMedicationsEdit()
+{
+
+}
+
 bool DatabaseConnection::initVisitsModel()
 {
     // 创建一个新的 QSqlTableModel 对象，并设置数据库
@@ -222,4 +257,31 @@ bool DatabaseConnection::initVisitsModel()
     visitsSelectionModel = new QItemSelectionModel(visitsTableModel, this); // 关联到 visitsTableModel
 
     return true;
+}
+
+int DatabaseConnection::addNewVisit()
+{
+    visitsTableModel->insertRow(visitsTableModel->rowCount(),QModelIndex());    // 在末尾添加一条记录
+    QModelIndex curIndex = visitsTableModel->index(visitsTableModel->rowCount()-1,1);   // 创建最后一行的ModelIndex
+    return curIndex.row();
+}
+
+bool DatabaseConnection::searchVisits(QString filter)
+{
+
+}
+
+bool DatabaseConnection::deleteCurrentVisits()
+{
+
+}
+
+bool DatabaseConnection::submitVisitsEdit()
+{
+
+}
+
+bool DatabaseConnection::revertVisitsEdit()
+{
+
 }

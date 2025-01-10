@@ -58,6 +58,8 @@ void MasterView::goDoctorEditView(int rowNum)
     qDebug() << "goDoctorEditView";
     doctorEditView = new DoctorEditView(this,rowNum);
     pushWidgetToStackView(doctorEditView);
+
+    connect(doctorEditView,SIGNAL(goPreviousView()),this,SLOT(goPreviousView()));
 }
 
 
@@ -75,6 +77,8 @@ void MasterView::goMedicalEditView(int rowNum)
     qDebug() << "goMedicalEditView";
     medicalEditView = new MedicalEditView(this,rowNum);
     pushWidgetToStackView(medicalEditView);
+
+    connect(medicalEditView,SIGNAL(goPreviousView()),this,SLOT(goPreviousView()));
 }
 
 void MasterView::goRecordView()
@@ -91,6 +95,8 @@ void MasterView::goRecordEditView(int rowNum)
     qDebug() << "goRecordEditView";
     recordEditView = new RecordEditView(this,rowNum);
     pushWidgetToStackView(recordEditView);
+
+    connect(recordEditView,SIGNAL(goPreviousView()),this,SLOT(goPreviousView()));
 }
 
 // void MasterView::goDepartmentView()
@@ -114,6 +120,8 @@ void MasterView::goPatientEditView(int rowNum)
     qDebug() << "goPatientEditView";
     patientEditView = new PatientEditView(this,rowNum);
     pushWidgetToStackView(patientEditView);
+
+    connect(patientEditView,SIGNAL(goPreviousView()),this,SLOT(goPreviousView()));
 }
 
 void MasterView::goPreviousView()

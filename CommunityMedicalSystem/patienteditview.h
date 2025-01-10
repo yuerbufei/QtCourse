@@ -16,9 +16,15 @@ public:
     explicit PatientEditView(QWidget *parent = nullptr,int index = 0);
     ~PatientEditView();
 
+private slots:
+    void on_btnSave_clicked();
+    void on_btnCancel_clicked();
+
+signals:
+    void goPreviousView();
+
 private:
     Ui::PatientEditView *ui;
-
     QDataWidgetMapper *dataMapper; // 数据映射
 };
 

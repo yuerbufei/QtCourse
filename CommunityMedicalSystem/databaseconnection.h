@@ -17,26 +17,30 @@ public:
     }
 
     QString userLogin(QString username, QString password);
+
     bool initDoctorsModel();
-    int addNewPatient();
+    int addNewDoctor();
     bool searchDoctors(QString filter);
     bool deleteCurrentDoctors();
     bool submitDoctorsEdit();
     bool revertDoctorsEdit();
 
     bool initPatientsModel();
+    int addNewPatient();
     bool searchPatients(QString filter);
     bool deleteCurrentPatients();
     bool submitPatientsEdit();
     bool revertPatientsEdit();
 
     bool initMedicationsModel();
+    int addNewMedication();
     bool searchMedications(QString filter);
     bool deleteCurrentMedications();
     bool submitMedicationsEdit();
     bool revertMedicationsEdit();
 
     bool initVisitsModel();
+    int addNewVisit();
     bool searchVisits(QString filter);
     bool deleteCurrentVisits();
     bool submitVisitsEdit();
