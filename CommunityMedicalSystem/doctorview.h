@@ -15,6 +15,9 @@ public:
     explicit DoctorView(QWidget *parent = nullptr);
     ~DoctorView();
 
+signals:
+    void goDoctorEditView();
+
 private:
     Ui::DoctorView *ui;
 };

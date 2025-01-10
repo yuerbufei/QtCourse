@@ -1,7 +1,7 @@
 #include "recordeditview.h"
 #include "ui_recordeditview.h"
 
-RecordEditView::RecordEditView(QWidget *parent)
+RecordEditView::RecordEditView(QWidget *parent,int index)
     : QWidget(parent)
     , ui(new Ui::RecordEditView)
 {

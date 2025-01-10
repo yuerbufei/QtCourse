@@ -1,7 +1,7 @@
 #include "medicaleditview.h"
 #include "ui_medicaleditview.h"
 
-MedicalEditView::MedicalEditView(QWidget *parent)
+MedicalEditView::MedicalEditView(QWidget *parent,int index)
     : QWidget(parent)
     , ui(new Ui::MedicalEditView)
 {

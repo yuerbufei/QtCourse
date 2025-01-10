@@ -92,6 +92,33 @@ bool DatabaseConnection::initDoctorsModel()
     return true;
 }
 
+int DatabaseConnection::addNewPatient()
+{
+    patientsTableModel->insertRow(patientsTableModel->rowCount(),QModelIndex());    // 在末尾添加一条记录
+    QModelIndex curIndex = patientsTableModel->index(patientsTableModel->rowCount()-1,1);   // 创建最后一行的ModelIndex
+    return curIndex.row();
+}
+
+bool DatabaseConnection::searchDoctors(QString filter)
+{
+
+}
+
+bool DatabaseConnection::deleteCurrentDoctors()
+{
+
+}
+
+bool DatabaseConnection::submitDoctorsEdit()
+{
+
+}
+
+bool DatabaseConnection::revertDoctorsEdit()
+{
+
+}
+
 bool DatabaseConnection::initPatientsModel()
 {
     // 创建一个新的 QSqlTableModel 对象，并设置数据库
@@ -117,6 +144,30 @@ bool DatabaseConnection::initPatientsModel()
     patientsSelectionModel = new QItemSelectionModel(patientsTableModel, this); // 关联到 patientsTableModel
 
     return true;
+}
+
+bool DatabaseConnection::searchPatients(QString filter)
+{
+    patientsTableModel->setFilter(filter);
+    return patientsTableModel->select();
+}
+
+bool DatabaseConnection::deleteCurrentPatients()
+{
+    QModelIndex curIndex = patientsSelectionModel->currentIndex();
+    patientsTableModel->removeRow(curIndex.row()); // 获取当前选择单元格的模型索引
+    patientsTableModel->submitAll();
+    patientsTableModel->select();
+}
+
+bool DatabaseConnection::submitPatientsEdit()
+{
+    return patientsTableModel->submitAll();
+}
+
+bool DatabaseConnection::revertPatientsEdit()
+{
+    patientsTableModel->revertAll();
 }
 
 bool DatabaseConnection::initMedicationsModel()

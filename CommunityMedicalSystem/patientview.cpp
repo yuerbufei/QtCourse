@@ -32,24 +32,27 @@ PatientView::~PatientView()
 
 void PatientView::on_btnFind_clicked()
 {
-
+    QString filter = QString("name like '%%1%").arg(ui->textSearch->text());
+    DatabaseConnection::getInstance().searchPatients(filter);
 }
 
 
 void PatientView::on_btnIncrease_clicked()
 {
-    emit goPatientEditView();
+    int curRow = DatabaseConnection::getInstance().addNewPatient();
+    emit goPatientEditView(curRow);
 }
 
 
 void PatientView::on_btnDelete_clicked()
 {
-
+    DatabaseConnection::getInstance().deleteCurrentPatients();
 }
 
 
 void PatientView::on_btnModify_clicked()
 {
-
+    QModelIndex curIndex = DatabaseConnection::getInstance().patientsSelectionModel->currentIndex();    // 获取当前选择单元格的模型索引
+    emit goPatientEditView(curIndex.row());
 }
 

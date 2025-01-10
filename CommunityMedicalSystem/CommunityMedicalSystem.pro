@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     databaseconnection.cpp \
     # departmentview.cpp \
+    doctoreditview.cpp \
     doctorview.cpp \
     loginview.cpp \
     main.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
     databaseconnection.h \
     # departmentview.h \
+    doctoreditview.h \
     doctorview.h \
     loginview.h \
     masterview.h \
@@ -39,6 +41,7 @@ HEADERS += \
 
 FORMS += \
     # departmentview.ui \
+    doctoreditview.ui \
     doctorview.ui \
     loginview.ui \
     masterview.ui \

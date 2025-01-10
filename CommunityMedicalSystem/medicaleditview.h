@@ -13,7 +13,7 @@ class MedicalEditView : public QWidget
     Q_OBJECT
 
 public:
-    explicit MedicalEditView(QWidget *parent = nullptr);
+    explicit MedicalEditView(QWidget *parent = nullptr,int index = 0);
     ~MedicalEditView();
 
 private:

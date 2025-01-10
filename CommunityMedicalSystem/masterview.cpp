@@ -49,7 +49,17 @@ void MasterView::goDoctorView()
     qDebug() << "goDoctorView";
     doctorView = new DoctorView(this);
     pushWidgetToStackView(doctorView);
+
+    connect(doctorView,SIGNAL(goDoctorEditView(int)),this,SLOT(goDoctorEditView(int)));
 }
+
+void MasterView::goDoctorEditView(int rowNum)
+{
+    qDebug() << "goDoctorEditView";
+    doctorEditView = new DoctorEditView(this,rowNum);
+    pushWidgetToStackView(doctorEditView);
+}
+
 
 void MasterView::goMedicalView()
 {
@@ -57,13 +67,13 @@ void MasterView::goMedicalView()
     medicalView = new MedicalView(this);
     pushWidgetToStackView(medicalView);
 
-    connect(medicalView,SIGNAL(goMedicalEditView()),this,SLOT(goMedicalView()));
+    connect(medicalView,SIGNAL(goMedicalEditView(int)),this,SLOT(goMedicalEditView(int)));
 }
 
-void MasterView::goMedicalEditView()
+void MasterView::goMedicalEditView(int rowNum)
 {
     qDebug() << "goMedicalEditView";
-    medicalEditView = new MedicalEditView(this);
+    medicalEditView = new MedicalEditView(this,rowNum);
     pushWidgetToStackView(medicalEditView);
 }
 
@@ -73,13 +83,13 @@ void MasterView::goRecordView()
     recordView = new RecordView(this);
     pushWidgetToStackView(recordView);
 
-    connect(recordView,SIGNAL(goRecordEditView()),this,SLOT(goRecordView()));
+    connect(recordView,SIGNAL(goRecordEditView(int)),this,SLOT(goRecordEditView(int)));
 }
 
-void MasterView::goRecordEditView()
+void MasterView::goRecordEditView(int rowNum)
 {
     qDebug() << "goRecordEditView";
-    recordEditView = new RecordEditView(this);
+    recordEditView = new RecordEditView(this,rowNum);
     pushWidgetToStackView(recordEditView);
 }
 
@@ -96,13 +106,13 @@ void MasterView::goPatientView()
     patientView = new PatientView(this);
     pushWidgetToStackView(patientView);
 
-    connect(patientView,SIGNAL(goPatientEditView()),this,SLOT(goPatientView()));
+    connect(patientView,SIGNAL(goPatientEditView(int)),this,SLOT(goPatientEditView(int)));
 }
 
-void MasterView::goPatientEditView()
+void MasterView::goPatientEditView(int rowNum)
 {
     qDebug() << "goPatientEditView";
-    patientEditView = new PatientEditView(this);
+    patientEditView = new PatientEditView(this,rowNum);
     pushWidgetToStackView(patientEditView);
 }
 

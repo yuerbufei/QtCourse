@@ -6,6 +6,7 @@
 #include "loginview.h"
 // #include "departmentview.h"
 #include "doctorview.h"
+#include "doctoreditview.h"
 #include "medicalview.h"
 #include "medicaleditview.h"
 #include "recordview.h"
@@ -30,13 +31,14 @@ public slots:
     void goLoginView();
     void goWelcomeView();
     void goDoctorView();
+    void goDoctorEditView(int rowNum);
     void goMedicalView();
-    void goMedicalEditView();
+    void goMedicalEditView(int rowNum);
     void goRecordView();
-    void goRecordEditView();
+    void goRecordEditView(int rowNum);
     // void goDepartmentView();
     void goPatientView();
-    void goPatientEditView();
+    void goPatientEditView(int rowNum);
     void goPreviousView();
 
 private slots:
@@ -55,6 +57,7 @@ private:
     LoginView *loginView;
     // DepartmentView *departmentView;
     DoctorView *doctorView;
+    DoctorEditView *doctorEditView;
     // DoctorEditView *doctorEditView;
     MedicalView *medicalView;
     MedicalEditView *medicalEditView;

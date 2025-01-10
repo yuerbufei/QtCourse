@@ -12,7 +12,7 @@ class RecordEditView : public QWidget
     Q_OBJECT
 
 public:
-    explicit RecordEditView(QWidget *parent = nullptr);
+    explicit RecordEditView(QWidget *parent = nullptr,int index = 0);
     ~RecordEditView();
 
 private:

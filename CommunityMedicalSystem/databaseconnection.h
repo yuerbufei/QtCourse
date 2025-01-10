@@ -18,9 +18,29 @@ public:
 
     QString userLogin(QString username, QString password);
     bool initDoctorsModel();
+    int addNewPatient();
+    bool searchDoctors(QString filter);
+    bool deleteCurrentDoctors();
+    bool submitDoctorsEdit();
+    bool revertDoctorsEdit();
+
     bool initPatientsModel();
+    bool searchPatients(QString filter);
+    bool deleteCurrentPatients();
+    bool submitPatientsEdit();
+    bool revertPatientsEdit();
+
     bool initMedicationsModel();
+    bool searchMedications(QString filter);
+    bool deleteCurrentMedications();
+    bool submitMedicationsEdit();
+    bool revertMedicationsEdit();
+
     bool initVisitsModel();
+    bool searchVisits(QString filter);
+    bool deleteCurrentVisits();
+    bool submitVisitsEdit();
+    bool revertVisitsEdit();
 
     QSqlTableModel *doctorsTableModel; // 数据模型
     QSqlTableModel *patientsTableModel; // 数据模型
