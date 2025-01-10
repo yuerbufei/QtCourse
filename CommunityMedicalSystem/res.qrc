@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>community_medical_system.db</file>
+    </qresource>
+</RCC>
